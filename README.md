@@ -1,3 +1,4 @@
+# http-receiver
 ## Purpose
 This is a simple go application that receives HTTP post requests, with a JSON payload, and outputs it as a minifed JSON string to STDOUT.
 
