@@ -6,10 +6,25 @@ It serves to receive Trino Events which simply requires an External HTTP Endpoin
 Redirecting the string to STDOUT will allow EFK Logging stack to pick them up.
 EFK pipeline enriches the event messages (i.e. now logs) with Kubernetes metadata, and makes it available on ElasticSearch.
 
-## Building the Image
+## Example Usage
 ```
-docker build -t seanlimvsg/http-receiver:v1.1 .
+# build image
+make build
 
-aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
-docker push public.ecr.aws/e7y4y7w2/http-receiver:v1.0
+# run container
+make run
+
+# Test commands
+while true; do curl -X POST -H 'content-type: application/json' -d '{"somekey":"somevalue"}' http://localhost:8080/ ; sleep 3; done
+docker logs <container_id> -f
+```
+
+## Go Upgrade Commands
+```
+# update go version
+go mod edit -go 1.20
+# update dependencies
+go get -u .
+# refresh modules list
+go mod tidy
 ```
